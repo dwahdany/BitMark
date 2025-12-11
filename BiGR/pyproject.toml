@@ -1,0 +1,20 @@
+[project]
+name = "bitmark-bigr"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.1.0",
+    "torchvision",
+    "timm",
+    "diffusers>=0.20.0",
+    "accelerate>=0.20.0",
+    "einops>=0.6.0",
+    "scipy>=1.10.0",
+    "opencv-python>=4.8.0",
+    "pillow>=9.0.0",
+    "tqdm>=4.60.0",
+]
+
+[tool.uv]
+index-url = "https://download.pytorch.org/whl/cu121"
+extra-index-url = ["https://pypi.org/simple"]
