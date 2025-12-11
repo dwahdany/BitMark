@@ -90,12 +90,16 @@ class BiGRBAE(VAEWrapper):
         
         args.codebook_size = int(code_dim)
         self.codebook_size = int(code_dim)
-        args.ckpt = '/path/BiGR/pretrained_models/' + f"bigr_{size}_d{code_dim}.pt"
 
-        if code_dim == '24':
-            args.ckpt_bae = '/path/BiGR/pretrained_models/' + "binaryae_ema_1000000.th"
-        elif code_dim == '32' and args.seq_len==256:
-            args.ckpt_bae = '/path/BiGR/pretrained_models/' + "binaryae_ema_950000.th"
+        # Only set checkpoint paths if not already provided
+        if not getattr(args, 'ckpt', None):
+            args.ckpt = '/path/BiGR/pretrained_models/' + f"bigr_{size}_d{code_dim}.pt"
+
+        if not getattr(args, 'ckpt_bae', None):
+            if code_dim == '24':
+                args.ckpt_bae = '/path/BiGR/pretrained_models/' + "binaryae_ema_1000000.th"
+            elif code_dim == '32' and args.seq_len==256:
+                args.ckpt_bae = '/path/BiGR/pretrained_models/' + "binaryae_ema_950000.th"
         print(f"DEBUG: BAE checkpoint path: {args.ckpt_bae}")
         args_ae = args2H(args)
         self.seq_len = args.seq_len
@@ -498,7 +502,7 @@ def add_big_r_arguments(parser):
                        help='Number of classes')
     parser.add_argument('--dataset', type=str, default='custom',
                        help='Dataset name')
-    parser.add_argument('--norm_first', type=bool, default=True,
+    parser.add_argument('--norm_first', action='store_true',
                        help='Apply normalization first')
     parser.add_argument('--cls_token_num', type=int, default=1,
                        help='Number of class tokens')
