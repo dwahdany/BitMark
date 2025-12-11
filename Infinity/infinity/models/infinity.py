@@ -731,7 +731,7 @@ class Infinity(nn.Module):
             if get_stat_data:
                 for i in range(batch_size):
                     ret[i]["stat_data"][f"scale_{si}"] = {}
-                    if si in watermark.scales:
+                    if si in watermark.scales and watermark.count_bit_flip:
                         ret[i]["stat_data"][f"scale_{si}"] = {"scale": {"entropy": scale_entropy[i], "bit_flips": scale_bit_flips[i]}, "token": {"entropy":token_entropy, "bit_flips":token_bit_flips}, "bit_n_of_tokens":{"entropy":bit_n_of_tokens_entropy}, "bit_flips":bit_n_of_tokens_flips}
                     else:
                         ret[i]["stat_data"][f"scale_{si}"] = {"scale": {"entropy": scale_entropy[i]}, "token": {"entropy":token_entropy}, "bit_n_of_tokens":{"entropy":bit_n_of_tokens_entropy}}
